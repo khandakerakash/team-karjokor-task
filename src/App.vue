@@ -4,10 +4,10 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-9">
-          <Inventory :items="items"/>
+          <Inventory @newCartItemAdded="addToCartItem" :items="items"/>
         </div>
         <div class="col-sm-3">
-          <Cart :carts="carts"/>
+          <Cart @cartItemRemove="removeFromCartItem" :items="cart"/>
         </div>
       </div>
     </div>
@@ -29,16 +29,19 @@
     data() {
       return {
         items: [],
-        cats: [ {
-          id: 1,
-          title: 'test',
-          photo: 'http://dummyimage.com/250x250.png/dddddd/000000',
-          price: 19.67,
-        }]
+        cart: []
       }
     },
     mounted() {
       this.items = MOCK_DATA
+    },
+    methods: {
+      addToCartItem(item) {
+        this.cart.push(item)
+      },
+      removeFromCartItem(index) {
+        this.cart.splice(index, 1)
+      }
     }
   }
 </script>
